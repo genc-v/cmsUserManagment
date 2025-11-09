@@ -1,6 +1,6 @@
 using cms.Domain.Entities;
 
-namespace cmsAuth.Application.Interfaces;
+namespace cmsUserManagment.Application.Interfaces;
 
 public interface IJwtTokenProvider
 {

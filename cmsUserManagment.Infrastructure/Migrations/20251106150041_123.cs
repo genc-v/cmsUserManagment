@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace cmsAuth.Infrastructure.Migrations
+namespace cmsUserManagment.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class _123 : Migration

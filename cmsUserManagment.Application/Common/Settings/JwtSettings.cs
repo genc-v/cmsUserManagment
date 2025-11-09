@@ -1,4 +1,4 @@
-namespace cmsAuth.Application.Common.Settings;
+namespace cmsUserManagment.Application.Common.Settings;
 
 public class JwtSettings
 {

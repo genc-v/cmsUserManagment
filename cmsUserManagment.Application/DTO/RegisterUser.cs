@@ -1,4 +1,4 @@
-namespace cmsAuth.Application.DTO;
+namespace cmsUserManagment.Application.DTO;
 
 public class RegisterUser
 {

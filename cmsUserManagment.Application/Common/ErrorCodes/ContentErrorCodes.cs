@@ -1,4 +1,4 @@
-namespace cmsAuth.Application.Common.ErrorCodes;
+namespace cmsUserManagment.Application.Common.ErrorCodes;
 
 public class ContentErrorCodes
 {

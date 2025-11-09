@@ -1,9 +1,9 @@
 using System.Text;
-using cmsAuth.Application.Common.Settings;
-using cmsAuth.Application.Interfaces;
-using cmsAuth.Infrastructure.Persistance;
-using cmsAuth.Infrastructure.Repositories;
-using cmsAuth.Infrastructure.Security;
+using cmsUserManagment.Application.Common.Settings;
+using cmsUserManagment.Application.Interfaces;
+using cmsUserManagment.Infrastructure.Persistance;
+using cmsUserManagment.Infrastructure.Repositories;
+using cmsUserManagment.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;

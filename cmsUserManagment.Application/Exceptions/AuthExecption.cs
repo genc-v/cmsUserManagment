@@ -1,4 +1,4 @@
-namespace cmsAuth.Application.Exceptions;
+namespace cmsUserManagment.Application.Exceptions;
 
 public class AuthExecption : Exception
 {

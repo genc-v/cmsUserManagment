@@ -1,5 +1,5 @@
 ﻿services:
-  cmsauth:
+  cmsusermanagment:
     build:
       context: .
       dockerfile: cmsUserManagment.API/Dockerfile

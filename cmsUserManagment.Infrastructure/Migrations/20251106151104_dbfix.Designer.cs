@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using cmsAuth.Infrastructure.Persistance;
+using cmsUserManagment.Infrastructure.Persistance;
 
 #nullable disable
 
-namespace cmsAuth.Infrastructure.Migrations
+namespace cmsUserManagment.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20251106151104_dbfix")]

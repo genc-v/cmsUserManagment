@@ -1,10 +1,10 @@
 using System.Text.Json;
 using cms.Domain.Entities;
-using cmsAuth.Application.DTO;
-using cmsAuth.Application.Interfaces;
+using cmsUserManagment.Application.DTO;
+using cmsUserManagment.Application.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 
-namespace cmsAuth.Infrastructure.Repositories;
+namespace cmsUserManagment.Infrastructure.Repositories;
 
 public class AuthenticationService(IDistributedCache cache) : IAuthenticationService
 {

@@ -1,7 +1,7 @@
 using cms.Domain.Entities;
-using cmsAuth.Application.DTO;
+using cmsUserManagment.Application.DTO;
 
-namespace cmsAuth.Application.Interfaces;
+namespace cmsUserManagment.Application.Interfaces;
 
 
 public interface IAuthenticationService

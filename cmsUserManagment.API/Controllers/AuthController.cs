@@ -1,9 +1,9 @@
-using cmsAuth.Application.DTO;
-using cmsAuth.Application.Interfaces;
+using cmsUserManagment.Application.DTO;
+using cmsUserManagment.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace cmsAuth.Controllers;
+namespace cmsUserManagment.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]

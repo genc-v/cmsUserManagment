@@ -2,11 +2,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using cms.Domain.Entities;
-using cmsAuth.Application.Common.Settings;
-using cmsAuth.Application.Interfaces;
+using cmsUserManagment.Application.Common.Settings;
+using cmsUserManagment.Application.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 
-namespace cmsAuth.Infrastructure.Security;
+namespace cmsUserManagment.Infrastructure.Security;
 
 public class JwtTokenProvider : IJwtTokenProvider
 {
