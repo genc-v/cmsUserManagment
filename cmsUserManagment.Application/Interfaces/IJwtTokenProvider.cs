@@ -4,5 +4,5 @@ namespace cmsAuth.Application.Interfaces;
 
 public interface IJwtTokenProvider
 {
-    string GenerateToken(string email, string id);
+    string GenerateToken(string email, string id, string role);
 }

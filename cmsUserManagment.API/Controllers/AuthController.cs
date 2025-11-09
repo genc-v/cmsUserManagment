@@ -26,10 +26,16 @@ public class AuthController : ControllerBase
     }
     
     [HttpGet("login")]
-    public IActionResult Login(string email, string password)
+    public IActionResult Login(string email, string password) 
     {
         var user = _authenticationService.Login(email, password);
-        var token  = _jwtTokenProvider.GenerateToken( email, "1231231");
+        var token  = _jwtTokenProvider.GenerateToken( email, "1231231", "admin");
         return Ok(token);
+    }
+    [HttpGet]
+    [Authorize(Roles = "admin")]
+    public IActionResult Get()
+    {
+        return Ok("hello");
     }
 }

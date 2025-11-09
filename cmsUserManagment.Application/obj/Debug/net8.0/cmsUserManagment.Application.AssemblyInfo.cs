@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("cmsUserManagment.Application")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+651f8261f914fd3193b15f506ada5411356af5c1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e9c9211027e61623ecf5ea5714aac425e5847c89")]
 [assembly: System.Reflection.AssemblyProductAttribute("cmsUserManagment.Application")]
 [assembly: System.Reflection.AssemblyTitleAttribute("cmsUserManagment.Application")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

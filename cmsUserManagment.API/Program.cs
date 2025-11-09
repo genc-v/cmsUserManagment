@@ -1,10 +1,13 @@
+using System.Text;
 using cmsAuth.Application.Common.Settings;
 using cmsAuth.Application.Interfaces;
 using cmsAuth.Infrastructure.Persistance;
 using cmsAuth.Infrastructure.Repositories;
 using cmsAuth.Infrastructure.Security;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +32,23 @@ builder.Services.AddSingleton<IJwtTokenProvider, JwtTokenProvider>(sp =>
     return new JwtTokenProvider(jwtSettings);
 });
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters()
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
+            ValidAudience = builder.Configuration["JwtSettings:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+        };
+    });
+
+builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
@@ -41,5 +61,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 app.Run();
