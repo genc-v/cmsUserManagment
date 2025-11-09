@@ -1,0 +1,44 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using cms.Domain.Entities;
+using cmsAuth.Application.Common.Settings;
+using cmsAuth.Application.Interfaces;
+using Microsoft.IdentityModel.Tokens;
+
+namespace cmsAuth.Infrastructure.Security;
+
+public class JwtTokenProvider : IJwtTokenProvider
+{
+    private readonly JwtSettings _jwtSettings;
+
+    public JwtTokenProvider(JwtSettings jwtSettings)
+    {
+        _jwtSettings = jwtSettings;
+    }
+    
+    public string GenerateToken(string email, string id)
+    {
+        var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
+        var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(
+            [
+                new Claim(JwtRegisteredClaimNames.Sub, id),
+                new Claim(JwtRegisteredClaimNames.Email, email)
+            ]),
+            Expires = DateTime.UtcNow.AddDays(_jwtSettings.ExpiryMinutes),
+            SigningCredentials = credentials,
+            Issuer = _jwtSettings.Issuer,
+            Audience = _jwtSettings.Audience
+        };
+        
+        var tokenHandler = new JwtSecurityTokenHandler();
+
+        SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+
+        return tokenHandler.WriteToken(token);
+    }
+}
