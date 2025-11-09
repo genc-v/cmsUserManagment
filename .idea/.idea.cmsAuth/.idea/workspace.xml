@@ -8,49 +8,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="24a60f75-567f-40f8-8636-7d8d64b9eb52" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.cmsAuth/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.cmsAuth/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.API.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.API.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Application.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Application.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Infrastructure.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/bin/Debug/net8.0/cmsUserManagment.Infrastructure.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/cmsUserManagment.API.sourcelink.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/ref/cmsUserManagment.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/ref/cmsUserManagment.API.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/refint/cmsUserManagment.API.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.API/obj/Debug/net8.0/refint/cmsUserManagment.API.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/Interfaces/IJwtTokenProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/Interfaces/IJwtTokenProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/bin/Debug/net8.0/cmsUserManagment.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/bin/Debug/net8.0/cmsUserManagment.Application.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/bin/Debug/net8.0/cmsUserManagment.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/bin/Debug/net8.0/cmsUserManagment.Application.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/cmsUserManagment.Application.sourcelink.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/ref/cmsUserManagment.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/ref/cmsUserManagment.Application.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/refint/cmsUserManagment.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Application/obj/Debug/net8.0/refint/cmsUserManagment.Application.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/Security/JwtTokenProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/Security/JwtTokenProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Application.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Application.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Application.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Application.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Infrastructure.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/bin/Debug/net8.0/cmsUserManagment.Infrastructure.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.AssemblyInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/cmsUserManagment.Infrastructure.sourcelink.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/ref/cmsUserManagment.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/ref/cmsUserManagment.Infrastructure.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/refint/cmsUserManagment.Infrastructure.dll" beforeDir="false" afterPath="$PROJECT_DIR$/cmsUserManagment.Infrastructure/obj/Debug/net8.0/refint/cmsUserManagment.Infrastructure.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="24a60f75-567f-40f8-8636-7d8d64b9eb52" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -251,7 +209,7 @@
       <workItem from="1762703500773" duration="301000" />
       <workItem from="1762710277332" duration="551000" />
       <workItem from="1762710840864" duration="3901000" />
-      <workItem from="1762719913070" duration="7481000" />
+      <workItem from="1762719913070" duration="7858000" />
     </task>
     <task id="LOCAL-00001" summary="adding cache">
       <option name="closed" value="true" />
@@ -309,7 +267,31 @@
       <option name="project" value="LOCAL" />
       <updated>1762726765408</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="adding role based in api">
+      <option name="closed" value="true" />
+      <created>1762727687990</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762727687990</updated>
+    </task>
+    <task id="LOCAL-00009" summary="adding role based in api">
+      <option name="closed" value="true" />
+      <created>1762727694361</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1762727694361</updated>
+    </task>
+    <task id="LOCAL-00010" summary="rename and docker fix">
+      <option name="closed" value="true" />
+      <created>1762727970379</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1762727970379</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +304,9 @@
     <MESSAGE value="adding cache" />
     <MESSAGE value="docker compose fix" />
     <MESSAGE value="adding jwt" />
-    <option name="LAST_COMMIT_MESSAGE" value="adding jwt" />
+    <MESSAGE value="adding role based in api" />
+    <MESSAGE value="rename and docker fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="rename and docker fix" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
