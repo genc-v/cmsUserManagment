@@ -33,7 +33,7 @@ public class JwtTokenProvider : IJwtTokenProvider
 
         var role = "user";
 
-        if(isAdmin) role = "admin";
+        if (isAdmin) role = "admin";
 
         claims.Add(new Claim(ClaimTypes.Role, role));
 

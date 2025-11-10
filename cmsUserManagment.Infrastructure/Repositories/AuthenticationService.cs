@@ -56,7 +56,7 @@ public class AuthenticationService(IDistributedCache cache, AppDbContext dbConte
 
         var user = _dbContext.Users.FirstOrDefault(e => e.Email == email && e.Password == password);
 
-        if (user == null)  throw new GeneralErrorCodes(GeneralErrorCodes.notFound.code, GeneralErrorCodes.notFound.message);
+        if (user == null) throw new GeneralErrorCodes(GeneralErrorCodes.notFound.code, GeneralErrorCodes.notFound.message);
 
         return getRightToken(user);
     }
@@ -100,7 +100,7 @@ public class AuthenticationService(IDistributedCache cache, AppDbContext dbConte
         TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
         bool result = tfa.ValidateTwoFactorPIN(user.TwoFactorSecret, code);
 
-        if(!result) throw new AuthErrorCodes(AuthErrorCodes.notCorrectCode.code, AuthErrorCodes.notCorrectCode.message);
+        if (!result) throw new AuthErrorCodes(AuthErrorCodes.notCorrectCode.code, AuthErrorCodes.notCorrectCode.message);
         _dbContext.TwoFactorAuthCodes.Remove(token);
         _dbContext.SaveChanges();
 

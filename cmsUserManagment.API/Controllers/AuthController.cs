@@ -42,7 +42,7 @@ public class AuthController : ControllerBase
         string key = "teest";
         TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
 
-        SetupCode setupInfo = tfa.GenerateSetupCode("cms", "test@text.com", key,false);
+        SetupCode setupInfo = tfa.GenerateSetupCode("cms", "test@text.com", key, false);
 
         return setupInfo;
     }
@@ -54,7 +54,7 @@ public class AuthController : ControllerBase
         TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
         bool result = tfa.ValidateTwoFactorPIN(key, manualKey);
 
-        if(!result) return BadRequest("not working");
+        if (!result) return BadRequest("not working");
         return Ok("it works");
     }
 }
