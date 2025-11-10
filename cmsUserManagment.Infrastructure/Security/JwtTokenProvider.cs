@@ -20,7 +20,7 @@ public class JwtTokenProvider : IJwtTokenProvider
         _jwtSettings = jwtSettings;
     }
 
-    public string GenerateToken(string email, string id, string role)
+    public string GenerateToken(string email, string id, bool isAdmin)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -30,6 +30,10 @@ public class JwtTokenProvider : IJwtTokenProvider
             new Claim(JwtRegisteredClaimNames.Sub, id),
             new Claim(JwtRegisteredClaimNames.Email, email)
         };
+
+        var role = "user";
+
+        if(isAdmin) role = "admin";
 
         claims.Add(new Claim(ClaimTypes.Role, role));
 

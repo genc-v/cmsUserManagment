@@ -2,7 +2,7 @@
 
 - [ ] login
 - [ ] register
-- [ ] 2fa
+- [x] 2fa
 - [x] role based
 - [x] jwt
 - [ ] get all (admin)

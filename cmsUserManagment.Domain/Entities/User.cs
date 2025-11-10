@@ -10,8 +10,10 @@ public class User
     public required string Email { get; set; }
     public required string Username { get; set; }
     public required string Password { get; set; }
-    public bool Has2Fa { get; set; } = false;
-    public bool? IsAdmin { get; set; } = false;
+
+    public string? TwoFactorSecret { get; set; }
+    public bool IsAdmin { get; set; } = false;
 
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+    public ICollection<TwoFactorAuthCodes> TwoFactorAuthCodes { get; set; } = new List<TwoFactorAuthCodes>();
 }

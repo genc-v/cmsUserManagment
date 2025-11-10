@@ -3,15 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cms.Domain.Entities;
 
-public class RefreshToken
+public class TwoFactorAuthCodes
 {
     [Key]
     public Guid Id { get; init; }
-
-    public required string Token { get; init; }
-    public DateTime Expires { get; init; }
+    public DateTime Expires { get; init; } = DateTime.UtcNow.AddMinutes(10);
 
     [ForeignKey(nameof(User))]
     public required Guid UserId { get; init; }
-    public  User User { get; init; }
+    public User User { get; init; }
 }

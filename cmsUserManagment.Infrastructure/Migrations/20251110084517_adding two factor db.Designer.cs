@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using cmsUserManagment.Infrastructure.Persistance;
 
@@ -11,9 +12,11 @@ using cmsUserManagment.Infrastructure.Persistance;
 namespace cmsUserManagment.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251110084517_adding two factor db")]
+    partial class addingtwofactordb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,21 +77,18 @@ namespace cmsUserManagment.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("IsAdmin")
+                    b.Property<bool>("Has2Fa")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool?>("IsAdmin")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("TwoFactorSecret")
-                        .HasColumnType("longtext");
-
                     b.Property<string>("Username")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("twoFactorSecrect")
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");

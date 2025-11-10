@@ -11,5 +11,5 @@ public interface IAuthenticationService
     public Task<bool> Register(RegisterUser user);
     public string RefreshToken(string token);
     public void Logout(string token);
-    public string twoFactorAuthentication(string loginId);
+    public string twoFactorAuthentication(Guid loginId, string key);
 }

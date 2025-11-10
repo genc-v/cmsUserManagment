@@ -1,6 +1,8 @@
 using cmsUserManagment.Application.DTO;
 using cmsUserManagment.Application.Interfaces;
 
+using Google.Authenticator;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,13 +32,29 @@ public class AuthController : ControllerBase
     public IActionResult Login(string email, string password)
     {
         var user = _authenticationService.Login(email, password);
-        var token = _jwtTokenProvider.GenerateToken(email, "1231231", "admin");
-        return Ok(token);
+        var token = _jwtTokenProvider.GenerateToken(email, "1231231", false);
+        return Ok(user);
     }
     [HttpGet]
-    [Authorize(Roles = "admin")]
-    public IActionResult Get()
+    public SetupCode Get()
     {
-        return Ok("hello");
+
+        string key = "teest";
+        TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
+
+        SetupCode setupInfo = tfa.GenerateSetupCode("cms", "test@text.com", key,false);
+
+        return setupInfo;
+    }
+
+    [HttpGet("testing")]
+    public IActionResult Testing(string manualKey)
+    {
+        string key = "teest";
+        TwoFactorAuthenticator tfa = new TwoFactorAuthenticator();
+        bool result = tfa.ValidateTwoFactorPIN(key, manualKey);
+
+        if(!result) return BadRequest("not working");
+        return Ok("it works");
     }
 }
