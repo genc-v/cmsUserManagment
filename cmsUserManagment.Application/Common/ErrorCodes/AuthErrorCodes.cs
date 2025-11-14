@@ -32,6 +32,8 @@ public class AuthErrorCodes : Exception
     public static readonly AuthErrorCodes AccountLocked
         = new(10, "The user account has been locked due to security policies.");
 
+    public static readonly AuthErrorCodes InvalidCredentials
+        = new(11, "There has been an error validating your credentials.");
     public AuthErrorCodes(int code, string message) : base(message)
     {
         Code = code;

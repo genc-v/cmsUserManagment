@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace cmsUserManagment.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/User")]
 [ApiController]
 [Authorize]
 public class AuthController : ControllerBase
@@ -93,4 +93,18 @@ public class AuthController : ControllerBase
         LoginCredentials token = await _authenticationService.TwoFactorAuthenticationLogin(Guid.Parse(loginId), code);
         return Ok(token);
     }
+
+    [HttpPut("update-account")]
+    public async Task<bool> UpdateAccount([FromBody] UpdateAccountRequest request)
+    {
+        bool result = await _authenticationService.UpdateAccount(_headersManager.GetJwtFromHeader(Request.Headers), request);
+        return result;
+    }
+
+    [HttpGet("account-info")]
+    public async Task<object?> GetAccountInfo()
+    {
+        return await _authenticationService.GetUserInfo(_headersManager.GetJwtFromHeader(Request.Headers));
+    }
+
 }

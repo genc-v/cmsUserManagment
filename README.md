@@ -10,9 +10,9 @@
 - [x] role based
 - [x] jwt
 - [x] silent login
-- [ ] get all (admin)
-- [ ] update / updateAll(admin)
-- [ ] delete / deleteAll(admin)
-- [ ] search with params (admin)
-- [ ] check logs
-- [ ] add logs
+- [x] get all (admin)
+- [x] update / updateAll(admin)
+- [x] delete / deleteAll(admin)
+- [x] search with params (admin)
+- [x] check logs
+- [x] add logs

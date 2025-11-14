@@ -193,6 +193,73 @@ public class AuthenticationService(
         return true;
     }
 
+    public async Task<bool> UpdateAccount(string jwtToken, UpdateAccountRequest request)
+    {
+        Guid userId = _jwtDecoder.GetUserid(jwtToken);
+        if (userId == Guid.Empty)
+            throw new AuthErrorCodes(AuthErrorCodes.BadToken.Code, AuthErrorCodes.BadToken.Message);
+
+        User? user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == userId);
+        if (user == null)
+            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
+
+        string oldEmail = user.Email;
+        bool emailChanged = false;
+        bool anyChange = false;
+
+        if (!string.IsNullOrWhiteSpace(request.Email) && !string.Equals(request.Email, user.Email, StringComparison.OrdinalIgnoreCase))
+        {
+            InputValidator.ValidateEmail(request.Email);
+            bool exists = await _dbContext.Users.AnyAsync(e => e.Email == request.Email && e.Id != user.Id);
+            if (exists)
+                throw new GeneralErrorCodes(GeneralErrorCodes.Conflict.Code, GeneralErrorCodes.Conflict.Message);
+
+            user.Email = request.Email!;
+            emailChanged = true;
+            anyChange = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.Username) && !string.Equals(request.Username, user.Username, StringComparison.Ordinal))
+        {
+            InputValidator.ValidateUsername(request.Username);
+            user.Username = request.Username!;
+            anyChange = true;
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.NewPassword))
+        {
+            InputValidator.ValidatePassword(request.NewPassword!);
+
+            if (string.IsNullOrWhiteSpace(request.CurrentPassword) || !PasswordHelper.VerifyPassword(request.CurrentPassword!, user.Password))
+                throw new AuthErrorCodes(AuthErrorCodes.InvalidCredentials.Code, AuthErrorCodes.InvalidCredentials.Message);
+
+            user.Password = PasswordHelper.HashPassword(request.NewPassword!);
+            anyChange = true;
+        }
+
+        if (!anyChange)
+            return true;
+
+        await _dbContext.SaveChangesAsync();
+
+        if (emailChanged)
+            await _cache.RemoveAsync($"email:{oldEmail}");
+
+        await UpdateCache(user);
+        return true;
+    }
+
+    public async Task<object?> GetUserInfo(string jwtToken)
+    {
+        Guid userId = _jwtDecoder.GetUserid(jwtToken);
+        if (userId == Guid.Empty)
+            throw new AuthErrorCodes(AuthErrorCodes.BadToken.Code, AuthErrorCodes.BadToken.Message);
+
+        User? user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == userId);
+
+        return new { user.Username, user.Email, hasTwoFactorAuth = user.IsTwoFactorEnabled };
+    }
+
     private async Task UpdateCache(User user)
     {
         var cachedUser = new

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using cmsUserManagment.Application.DTO;
 
 using Google.Authenticator;
@@ -14,4 +15,6 @@ public interface IAuthenticationService
     public Task<bool> TwoFactorAuthenticationConfirm(string jwtToken, string code);
     public Task<SetupCode> GenerateAuthToken(string jwtToken);
     public Task<bool> DisableTwoFactorAuth(string jwtToken);
+    public Task<bool> UpdateAccount(string jwtToken, UpdateAccountRequest request);
+    public Task<object> GetUserInfo(string jwtToken);
 }

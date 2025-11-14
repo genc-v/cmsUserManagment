@@ -92,6 +92,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<HeadersManager>();
 builder.Services.AddScoped<JwtDecoder>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IUserManagementService, UserManagementService>();
 
 WebApplication app = builder.Build();
 
