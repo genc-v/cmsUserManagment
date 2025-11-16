@@ -1,10 +1,12 @@
 using System.Text.Json;
+
 using cms.Domain.Entities;
 using cmsUserManagment.Application.Common.ErrorCodes;
 using cmsUserManagment.Application.DTO;
 using cmsUserManagment.Application.Interfaces;
 using cmsUserManagment.Application.Common.Validation;
 using cmsUserManagment.Infrastructure.Persistance;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 
@@ -29,13 +31,11 @@ public class UserManagementService(AppDbContext dbContext, IDistributedCache cac
         if (!string.IsNullOrEmpty(cachedUser))
         {
             var userFromCache = JsonSerializer.Deserialize<User>(cachedUser);
-            if (userFromCache != null)
-                return userFromCache;
+            if (userFromCache != null) return userFromCache;
         }
 
         User? user = await _dbContext.Users.FindAsync(id);
-        if (user == null)
-            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
+        if (user == null) throw GeneralErrorCodes.NotFound;
 
         await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(user));
         return user;
@@ -43,21 +43,18 @@ public class UserManagementService(AppDbContext dbContext, IDistributedCache cac
 
     public async Task<bool> UpdateUser(Guid id, UpdateUserDto userDto)
     {
-        if (userDto == null)
-            throw new GeneralErrorCodes(GeneralErrorCodes.InvalidInput.Code, GeneralErrorCodes.InvalidInput.Message);
+        if (userDto == null) throw GeneralErrorCodes.InvalidInput;
 
         InputValidator.ValidateUsername(userDto.Username);
         InputValidator.ValidateEmail(userDto.Email);
 
         User? user = await _dbContext.Users.FindAsync(id);
-        if (user == null)
-            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
+        if (user == null) throw GeneralErrorCodes.NotFound;
 
         if (!string.Equals(user.Email, userDto.Email, StringComparison.OrdinalIgnoreCase))
         {
             bool emailTaken = await _dbContext.Users.AnyAsync(u => u.Email == userDto.Email && u.Id != id);
-            if (emailTaken)
-                throw new GeneralErrorCodes(GeneralErrorCodes.Conflict.Code, GeneralErrorCodes.Conflict.Message);
+            if (emailTaken) throw GeneralErrorCodes.Conflict;
         }
 
         string oldEmail = user.Email;
@@ -75,6 +72,7 @@ public class UserManagementService(AppDbContext dbContext, IDistributedCache cac
         {
             await _cache.RemoveAsync($"email:{oldEmail}");
         }
+
         await UpdateAuthCache(user);
 
         return true;
@@ -83,8 +81,7 @@ public class UserManagementService(AppDbContext dbContext, IDistributedCache cac
     public async Task<bool> DeleteUser(Guid id)
     {
         User? user = await _dbContext.Users.FindAsync(id);
-        if (user == null)
-            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
+        if (user == null) throw GeneralErrorCodes.NotFound;
 
         _dbContext.Users.Remove(user);
         await _dbContext.SaveChangesAsync();
@@ -98,8 +95,7 @@ public class UserManagementService(AppDbContext dbContext, IDistributedCache cac
     public async Task<bool> DeleteBulkUsers(IEnumerable<Guid> ids)
     {
         var usersToDelete = await _dbContext.Users.Where(u => ids.Contains(u.Id)).ToListAsync();
-        if (usersToDelete.Count == 0)
-            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
+        if (usersToDelete.Count == 0) throw GeneralErrorCodes.NotFound;
 
         _dbContext.Users.RemoveRange(usersToDelete);
         await _dbContext.SaveChangesAsync();
@@ -113,15 +109,11 @@ public class UserManagementService(AppDbContext dbContext, IDistributedCache cac
         return true;
     }
 
-
-    public async Task<IEnumerable<User>> SearchUsers(
-        string? username,
-        string? email,
-        bool? isAdmin,
-        string? orderBy = "username",
-        bool descending = false)
+    public async Task<IEnumerable<User>> SearchUsers(string? username, string? email, bool? isAdmin,
+        string? orderBy = "username", bool descending = false)
     {
-        string cacheKey = $"search:username={username}&email={email}&isAdmin={isAdmin}&orderBy={orderBy}&desc={descending}";
+        string cacheKey =
+            $"search:username={username}&email={email}&isAdmin={isAdmin}&orderBy={orderBy}&desc={descending}";
         string? cachedResult = await _cache.GetStringAsync(cacheKey);
 
         if (!string.IsNullOrEmpty(cachedResult))
@@ -131,31 +123,23 @@ public class UserManagementService(AppDbContext dbContext, IDistributedCache cac
 
         var query = _dbContext.Users.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(username))
-            query = query.Where(u => u.Username.Contains(username));
+        if (!string.IsNullOrWhiteSpace(username)) query = query.Where(u => u.Username.Contains(username));
 
-        if (!string.IsNullOrWhiteSpace(email))
-            query = query.Where(u => u.Email.Contains(email));
+        if (!string.IsNullOrWhiteSpace(email)) query = query.Where(u => u.Email.Contains(email));
 
-        if (isAdmin.HasValue)
-            query = query.Where(u => u.IsAdmin == isAdmin.Value);
+        if (isAdmin.HasValue) query = query.Where(u => u.IsAdmin == isAdmin.Value);
 
-        // ➜ Dynamic ORDER BY
         query = orderBy?.ToLower() switch
         {
-            "email"   => descending ? query.OrderByDescending(u => u.Email) : query.OrderBy(u => u.Email),
+            "email" => descending ? query.OrderByDescending(u => u.Email) : query.OrderBy(u => u.Email),
             "isadmin" => descending ? query.OrderByDescending(u => u.IsAdmin) : query.OrderBy(u => u.IsAdmin),
-            _         => descending ? query.OrderByDescending(u => u.Username) : query.OrderBy(u => u.Username)
+            _ => descending ? query.OrderByDescending(u => u.Username) : query.OrderBy(u => u.Username)
         };
 
         var users = await query.ToListAsync();
 
-        await _cache.SetStringAsync(cacheKey,
-            JsonSerializer.Serialize(users),
-            new DistributedCacheEntryOptions
-            {
-                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10)
-            });
+        await _cache.SetStringAsync(cacheKey, JsonSerializer.Serialize(users),
+            new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(10) });
 
         return users;
     }

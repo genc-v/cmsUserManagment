@@ -26,85 +26,77 @@ public class AuthController : ControllerBase
         _headersManager = headersManager;
     }
 
-    [HttpPost("register")]
-    [AllowAnonymous]
-    public async Task<IActionResult> Register([FromBody] RegisterUser newUser)
+    [HttpGet("VerifyUser")]
+    public async Task<Guid> VerifyUser()
     {
-        bool result = await _authenticationService.Register(newUser);
-        return Ok(result);
+        return await _authenticationService.VerifyUser(_headersManager.GetJwtFromHeader(Request.Headers));
     }
 
+    [HttpPost("register")]
+    [AllowAnonymous]
+    public async Task<bool> Register([FromBody] RegisterUser newUser)
+    {
+        return await _authenticationService.Register(newUser);
+    }
 
     [HttpGet("login")]
     [AllowAnonymous]
-    public async Task<IActionResult> Login(string email, string password)
+    public async Task<object> Login(string email, string password)
     {
-        object? tokens = await _authenticationService.Login(email, password);
-        return Ok(tokens);
+        return await _authenticationService.Login(email, password);
     }
 
     [HttpPost("logout")]
-    public async Task<IActionResult> Logout([FromBody] Guid refreshToken)
+    public async Task<bool> Logout([FromBody] Guid refreshToken)
     {
         string jwt = _headersManager.GetJwtFromHeader(Request.Headers);
 
         await _authenticationService.Logout(jwt, refreshToken);
-        return Ok();
+        return true;
     }
 
     [HttpGet("refresh-token")]
-    public async Task<IActionResult> RefreshToken(Guid refreshToken)
+    public async Task<string> RefreshToken(Guid refreshToken)
     {
-        string token =
-            await _authenticationService.RefreshToken(refreshToken, _headersManager.GetJwtFromHeader(Request.Headers));
-        return Ok(token);
+        return await _authenticationService.RefreshToken(refreshToken,
+            _headersManager.GetJwtFromHeader(Request.Headers));
     }
 
     [HttpPost("generate-two-factor-auth-code")]
     public async Task<SetupCode> GenerateTwoFactorAuthSetupCode()
     {
-        SetupCode setupCode =
-            await _authenticationService.GenerateAuthToken(_headersManager.GetJwtFromHeader(Request.Headers));
-        return setupCode;
+        return await _authenticationService.GenerateAuthToken(_headersManager.GetJwtFromHeader(Request.Headers));
     }
 
     [HttpPost("two-factor-auth-confirm")]
     public async Task<bool> TwoFactorAuthenticationConfirm([FromBody] string code)
     {
-        bool result =
-            await _authenticationService.TwoFactorAuthenticationConfirm(
-                _headersManager.GetJwtFromHeader(Request.Headers), code);
-        return result;
+        return await _authenticationService.TwoFactorAuthenticationConfirm(
+            _headersManager.GetJwtFromHeader(Request.Headers), code);
     }
 
     [HttpDelete("disable-two-factor-auth")]
     public async Task<bool> DisableTwoFactorAuth()
     {
-        bool result =
-            await _authenticationService.DisableTwoFactorAuth(_headersManager.GetJwtFromHeader(Request.Headers));
-        return result;
+        return await _authenticationService.DisableTwoFactorAuth(_headersManager.GetJwtFromHeader(Request.Headers));
     }
-
 
     [HttpPost("login-with-two-factor-auth")]
     [AllowAnonymous]
-    public async Task<IActionResult?> TwoFactorAuthenticationLogin(string loginId, string code)
+    public async Task<LoginCredentials> TwoFactorAuthenticationLogin(string loginId, string code)
     {
-        LoginCredentials token = await _authenticationService.TwoFactorAuthenticationLogin(Guid.Parse(loginId), code);
-        return Ok(token);
+        return await _authenticationService.TwoFactorAuthenticationLogin(Guid.Parse(loginId), code);
     }
 
     [HttpPut("update-account")]
     public async Task<bool> UpdateAccount([FromBody] UpdateAccountRequest request)
     {
-        bool result = await _authenticationService.UpdateAccount(_headersManager.GetJwtFromHeader(Request.Headers), request);
-        return result;
+        return await _authenticationService.UpdateAccount(_headersManager.GetJwtFromHeader(Request.Headers), request);
     }
 
     [HttpGet("account-info")]
-    public async Task<object?> GetAccountInfo()
+    public async Task<object> GetAccountInfo()
     {
         return await _authenticationService.GetUserInfo(_headersManager.GetJwtFromHeader(Request.Headers));
     }
-
 }

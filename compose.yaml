@@ -15,6 +15,16 @@
       JwtSettings__ExpiryMinutes: "60"
     ports:
       - "5054:8080"
+    command: >
+      /bin/bash -c "
+        dotnet tool install --global dotnet-ef &&
+        export PATH=\"$PATH:/root/.dotnet/tools\" &&
+        echo 'Running migrations...' &&
+        dotnet ef database update &&
+        echo 'Starting API...' &&
+        dotnet cmsUserManagment.API.dll
+      "
+
 
 
   mysql:

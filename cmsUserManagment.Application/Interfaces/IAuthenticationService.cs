@@ -7,7 +7,8 @@ namespace cmsUserManagment.Application.Interfaces;
 
 public interface IAuthenticationService
 {
-    public Task<object?> Login(string email, string password);
+    public Task<Guid> VerifyUser(string jwtToken);
+    public Task<object> Login(string email, string password);
     public Task<bool> Register(RegisterUser user);
     public Task<string> RefreshToken(Guid refreshToken, string jwtToken);
     public Task Logout(string jwtToken, Guid rt);
