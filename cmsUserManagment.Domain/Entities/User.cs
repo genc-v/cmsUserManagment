@@ -4,7 +4,7 @@ namespace cms.Domain.Entities;
 
 public class User
 {
-    [Key] public Guid Id { get; init; }
+    [Key] public Guid Id { get; set; }
 
     [Required] [EmailAddress] public required string Email { get; set; }
 

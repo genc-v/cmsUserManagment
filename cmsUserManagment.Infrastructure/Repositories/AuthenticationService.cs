@@ -31,9 +31,11 @@ public class AuthenticationService(
     public async Task<Guid> VerifyUser(string jwtToken)
     {
         Guid userId = _jwtDecoder.GetUserid(jwtToken);
-        User? user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == userId);
-        if (user == null) throw GeneralErrorCodes.NotFound;
-        return user.Id;
+
+        if (!await _dbContext.Users.AnyAsync(u => u.Id == userId))
+            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
+
+        return userId;
     }
 
     public async Task<object> Login(string email, string password)
@@ -127,8 +129,9 @@ public class AuthenticationService(
 
     public async Task<LoginCredentials> TwoFactorAuthenticationLogin(Guid loginId, string code)
     {
-        TwoFactorAuthCodes? token = await _dbContext.TwoFactorAuthCodes.FirstOrDefaultAsync(e => e.Id == loginId);
-        if (token == null || token.Expires < DateTime.UtcNow) throw AuthErrorCodes.TokenNotFound;
+        TwoFactorAuthCode? token = await _dbContext.TwoFactorAuthCodes.FirstOrDefaultAsync(e => e.Id == loginId);
+        if (token == null || token.Expires < DateTime.UtcNow)
+            throw new AuthErrorCodes(AuthErrorCodes.TokenNotFound.Code, AuthErrorCodes.TokenNotFound.Message);
 
         User? user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == token.UserId);
         if (user == null) throw GeneralErrorCodes.NotFound;
@@ -239,12 +242,15 @@ public class AuthenticationService(
         return true;
     }
 
-    public async Task<object?> GetUserInfo(string jwtToken)
+    public async Task<object> GetUserInfo(string jwtToken)
     {
         Guid userId = _jwtDecoder.GetUserid(jwtToken);
         if (userId == Guid.Empty) throw AuthErrorCodes.BadToken;
 
         User? user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == userId);
+        
+        if (user == null)
+            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
 
         return new { user.Username, user.Email, hasTwoFactorAuth = user.IsTwoFactorEnabled };
     }
@@ -280,7 +286,7 @@ public class AuthenticationService(
             return new LoginCredentials { jwtToken = token, refreshToken = refreshtoken.Id.ToString() };
         }
 
-        TwoFactorAuthCodes twoFactorCode = new() { UserId = user.Id };
+        TwoFactorAuthCode twoFactorCode = new() { UserId = user.Id };
 
         await _dbContext.TwoFactorAuthCodes.AddAsync(twoFactorCode);
         await _dbContext.SaveChangesAsync();

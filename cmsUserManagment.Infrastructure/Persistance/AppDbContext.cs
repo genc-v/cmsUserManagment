@@ -12,5 +12,5 @@ public class AppDbContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
     public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
-    public virtual DbSet<TwoFactorAuthCodes> TwoFactorAuthCodes { get; set; }
+    public virtual DbSet<TwoFactorAuthCode> TwoFactorAuthCodes { get; set; }
 }

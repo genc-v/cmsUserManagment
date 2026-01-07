@@ -41,7 +41,7 @@ namespace cmsUserManagment.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCodes", b =>
+            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCode", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -103,7 +103,7 @@ namespace cmsUserManagment.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCodes", b =>
+            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCode", b =>
                 {
                     b.HasOne("cms.Domain.Entities.User", "User")
                         .WithMany()

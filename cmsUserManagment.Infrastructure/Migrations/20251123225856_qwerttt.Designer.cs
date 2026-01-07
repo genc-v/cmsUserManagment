@@ -12,8 +12,8 @@ using cmsUserManagment.Infrastructure.Persistance;
 namespace cmsUserManagment.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251110084517_adding two factor db")]
-    partial class addingtwofactordb
+    [Migration("20251123225856_qwerttt")]
+    partial class qwerttt
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,10 +34,6 @@ namespace cmsUserManagment.Infrastructure.Migrations
                     b.Property<DateTime>("Expires")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("Token")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
@@ -48,7 +44,7 @@ namespace cmsUserManagment.Infrastructure.Migrations
                     b.ToTable("RefreshTokens");
                 });
 
-            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCodes", b =>
+            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCode", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -77,14 +73,17 @@ namespace cmsUserManagment.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("Has2Fa")
+                    b.Property<bool>("IsAdmin")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool?>("IsAdmin")
+                    b.Property<bool>("IsTwoFactorEnabled")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("Password")
                         .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("TwoFactorSecret")
                         .HasColumnType("longtext");
 
                     b.Property<string>("Username")
@@ -107,10 +106,10 @@ namespace cmsUserManagment.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCodes", b =>
+            modelBuilder.Entity("cms.Domain.Entities.TwoFactorAuthCode", b =>
                 {
                     b.HasOne("cms.Domain.Entities.User", "User")
-                        .WithMany("TwoFactorAuthCodes")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -121,8 +120,6 @@ namespace cmsUserManagment.Infrastructure.Migrations
             modelBuilder.Entity("cms.Domain.Entities.User", b =>
                 {
                     b.Navigation("RefreshTokens");
-
-                    b.Navigation("TwoFactorAuthCodes");
                 });
 #pragma warning restore 612, 618
         }
