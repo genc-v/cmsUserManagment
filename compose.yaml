@@ -4,9 +4,12 @@ services:
     build:
       context: .
       dockerfile: cmsUserManagment.API/Dockerfile
+    restart: always
     depends_on:
-      - mysql
-      - redis
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       ConnectionStrings__DefaultConnection: "Server=mysql;Database=auth;Uid=user;Pwd=alskjdfa@alskdjfAAAb12;"
       Redis__Connection: "redis:6379"
@@ -21,13 +24,29 @@ services:
 
   mysql:
     image: mysql:8.0
+    restart: always
     environment:
       MYSQL_DATABASE: auth
       MYSQL_USER: user
-      MYSQL_PASSWORD: 'alskjdfa@alskdjfAAAb12'
-      MYSQL_ROOT_PASSWORD: 'rootPassword123!'
+      MYSQL_PASSWORD: "alskjdfa@alskdjfAAAb12"
+      MYSQL_ROOT_PASSWORD: "rootPassword123!"
     ports:
-      - "33063:3306"   # Host port different
+      - "33063:3306" # Host port different
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p$$MYSQL_ROOT_PASSWORD",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - mysql-user-data:/var/lib/mysql
     networks:
@@ -35,8 +54,14 @@ services:
 
   redis:
     image: redis:7
+    restart: always
     ports:
-      - "6381:6379"   # Host port different
+      - "6381:6379" # Host port different
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - redis-user-data:/data
     networks:

@@ -29,7 +29,17 @@ public class AuthenticationService(
     private readonly JwtDecoder _jwtDecoder = jwtDecoder;
     private readonly IJwtTokenProvider _jwtTokenProvider = jwtTokenProvider;
 
-    public async Task<object?> Login(string email, string password)
+    public async Task<Guid> VerifyUser(string jwtToken)
+    {
+        Guid userId = _jwtDecoder.GetUserid(jwtToken);
+
+        if (!await _dbContext.Users.AnyAsync(u => u.Id == userId))
+            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
+
+        return userId;
+    }
+
+    public async Task<object> Login(string email, string password)
     {
         InputValidator.ValidateEmail(email);
         InputValidator.ValidatePassword(password);
@@ -170,7 +180,6 @@ public class AuthenticationService(
         TwoFactorAuthenticator tfa = new();
         SetupCode setupInfo = tfa.GenerateSetupCode("cms", user.Email, key, false);
 
-
         user.TwoFactorSecret = key;
 
         await _dbContext.SaveChangesAsync();
@@ -250,13 +259,16 @@ public class AuthenticationService(
         return true;
     }
 
-    public async Task<object?> GetUserInfo(string jwtToken)
+    public async Task<object> GetUserInfo(string jwtToken)
     {
         Guid userId = _jwtDecoder.GetUserid(jwtToken);
         if (userId == Guid.Empty)
             throw new AuthErrorCodes(AuthErrorCodes.BadToken.Code, AuthErrorCodes.BadToken.Message);
 
         User? user = await _dbContext.Users.FirstOrDefaultAsync(e => e.Id == userId);
+        
+        if (user == null)
+            throw new GeneralErrorCodes(GeneralErrorCodes.NotFound.Code, GeneralErrorCodes.NotFound.Message);
 
         return new { user.Username, user.Email, hasTwoFactorAuth = user.IsTwoFactorEnabled };
     }
