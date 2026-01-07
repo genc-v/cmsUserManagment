@@ -1,4 +1,5 @@
-﻿services:
+version: "3.9"
+services:
   cmsusermanagment:
     build:
       context: .
@@ -14,30 +15,37 @@
       JwtSettings__Audience: "account"
       JwtSettings__ExpiryMinutes: "60"
     ports:
-      - "5054:8080"
-
+      - "5055:8080"
+    networks:
+      - cmsusernetwork
 
   mysql:
     image: mysql:8.0
-    container_name: mysql-auth
     environment:
       MYSQL_DATABASE: auth
       MYSQL_USER: user
       MYSQL_PASSWORD: 'alskjdfa@alskdjfAAAb12'
       MYSQL_ROOT_PASSWORD: 'rootPassword123!'
     ports:
-      - "3306:3306"
+      - "33063:3306"   # Host port different
     volumes:
-      - mysql-data:/var/lib/mysql
+      - mysql-user-data:/var/lib/mysql
+    networks:
+      - cmsusernetwork
 
   redis:
     image: redis:7
-    container_name: redis-cache
     ports:
-      - "6379:6379"
+      - "6381:6379"   # Host port different
     volumes:
-      - redis-data:/data
+      - redis-user-data:/data
+    networks:
+      - cmsusernetwork
 
 volumes:
-  mysql-data:
-  redis-data:
+  mysql-user-data:
+  redis-user-data:
+
+networks:
+  cmsusernetwork:
+    driver: bridge

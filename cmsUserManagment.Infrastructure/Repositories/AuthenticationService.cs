@@ -131,7 +131,7 @@ public class AuthenticationService(
 
     public async Task<LoginCredentials> TwoFactorAuthenticationLogin(Guid loginId, string code)
     {
-        TwoFactorAuthCodes? token = await _dbContext.TwoFactorAuthCodes.FirstOrDefaultAsync(e => e.Id == loginId);
+        TwoFactorAuthCode? token = await _dbContext.TwoFactorAuthCodes.FirstOrDefaultAsync(e => e.Id == loginId);
         if (token == null || token.Expires < DateTime.UtcNow)
             throw new AuthErrorCodes(AuthErrorCodes.TokenNotFound.Code, AuthErrorCodes.TokenNotFound.Message);
 
@@ -169,6 +169,7 @@ public class AuthenticationService(
 
         TwoFactorAuthenticator tfa = new();
         SetupCode setupInfo = tfa.GenerateSetupCode("cms", user.Email, key, false);
+
 
         user.TwoFactorSecret = key;
 
@@ -291,7 +292,7 @@ public class AuthenticationService(
             return new LoginCredentials { jwtToken = token, refreshToken = refreshtoken.Id.ToString() };
         }
 
-        TwoFactorAuthCodes twoFactorCode = new() { UserId = user.Id };
+        TwoFactorAuthCode twoFactorCode = new() { UserId = user.Id };
 
         await _dbContext.TwoFactorAuthCodes.AddAsync(twoFactorCode);
         await _dbContext.SaveChangesAsync();

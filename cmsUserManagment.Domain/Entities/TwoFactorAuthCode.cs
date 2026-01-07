@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace cms.Domain.Entities;
 
-public class RefreshToken
+public class TwoFactorAuthCode
 {
     [Key] public Guid Id { get; set; }
 
-    public DateTime Expires { get; set; } = DateTime.UtcNow.AddDays(90);
+    public DateTime Expires { get; set; } = DateTime.UtcNow.AddMinutes(10);
 
     [ForeignKey(nameof(User))] public required Guid UserId { get; set; }
 

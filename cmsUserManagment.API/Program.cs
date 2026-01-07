@@ -1,12 +1,10 @@
 using System.Text;
-
 using cmsUserManagment.Application.Common.Settings;
 using cmsUserManagment.Application.Interfaces;
 using cmsUserManagment.Infrastructure.Persistance;
 using cmsUserManagment.Infrastructure.Repositories;
 using cmsUserManagment.Infrastructure.Security;
 using cmsUserManagment.Middlewares;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -36,7 +34,8 @@ builder.Services.AddSingleton<IJwtTokenProvider, JwtTokenProvider>(sp =>
     return new JwtTokenProvider(jwtSettings);
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder
+    .Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -48,7 +47,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
             ValidAudience = builder.Configuration["JwtSettings:Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"]))
+                Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Secret"])
+            ),
         };
     });
 
@@ -62,7 +62,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
 
     // Add JWT Authentication support in Swagger
-    options.AddSecurityDefinition("Bearer",
+    options.AddSecurityDefinition(
+        "Bearer",
         new OpenApiSecurityScheme
         {
             Description =
@@ -70,22 +71,29 @@ builder.Services.AddSwaggerGen(options =>
             Name = "Authorization",
             In = ParameterLocation.Header,
             Type = SecuritySchemeType.ApiKey,
-            Scheme = "Bearer"
-        });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
-                Scheme = "oauth2",
-                Name = "Bearer",
-                In = ParameterLocation.Header
-            },
-            new List<string>()
+            Scheme = "Bearer",
         }
-    });
+    );
+
+    options.AddSecurityRequirement(
+        new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer",
+                    },
+                    Scheme = "oauth2",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header,
+                },
+                new List<string>()
+            },
+        }
+    );
 });
 builder.Services.AddControllers();
 
@@ -94,12 +102,12 @@ builder.Services.AddScoped<JwtDecoder>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserManagementService, UserManagementService>();
 
-WebApplication app = builder.Build();
+var app = builder.Build();
+app.UsePathBase("/api/auth");
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseMiddleware<JwtValidationMiddleware>();
 app.UseMiddleware<ErrorHandlingMiddleware>();
 
 app.UseHttpsRedirection();

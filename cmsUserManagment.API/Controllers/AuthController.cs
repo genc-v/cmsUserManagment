@@ -106,5 +106,4 @@ public class AuthController : ControllerBase
     {
         return await _authenticationService.GetUserInfo(_headersManager.GetJwtFromHeader(Request.Headers));
     }
-
 }
