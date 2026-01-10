@@ -33,6 +33,13 @@ spec:
               value: "account"
             - name: JwtSettings__ExpiryMinutes
               value: "60"
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+        limits:
+          nofile: 4096
 
 ---
 apiVersion: v1
