@@ -21,6 +21,6 @@ jobs:
             -f cmsUserManagment.API/Dockerfile \
             .
 
-      # - name: Apply Kubernetes manifests
-      #   run: |
-      #     kubectl apply -f https://github.com/temp/temp.yaml
+      - name: Apply Kubernetes manifests
+        run: |
+          kubectl apply -f https://raw.githubusercontent.com/JonFjz/cmsUserManagment/refs/heads/main/kubernetes/deploy.yaml
