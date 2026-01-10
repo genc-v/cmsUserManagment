@@ -1,0 +1,26 @@
+name: CI/CD - CMS User Management
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -t cmsusermanagement:latest \
+            -f cmsUserManagment.API/Dockerfile \
+            .
+
+      # - name: Apply Kubernetes manifests
+      #   run: |
+      #     kubectl apply -f https://github.com/temp/temp.yaml
