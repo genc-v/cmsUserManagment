@@ -26,7 +26,6 @@ public class AuthController : ControllerBase
         _headersManager = headersManager;
     }
 
-
     [HttpPost("register")]
     [AllowAnonymous]
     public async Task<bool> Register([FromBody] RegisterUser newUser)
@@ -93,11 +92,5 @@ public class AuthController : ControllerBase
     public async Task<object> GetAccountInfo()
     {
         return await _authenticationService.GetUserInfo(_headersManager.GetJwtFromHeader(Request.Headers));
-    }
-
-    [HttpGet("verify")]
-    public async Task<Guid> VerifyUser()
-    {
-        return await _authenticationService.VerifyUser(_headersManager.GetJwtFromHeader(Request.Headers));
     }
 }
