@@ -68,7 +68,6 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 
 
-// Configure Swagger
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" });
@@ -77,7 +76,6 @@ builder.Services.AddSwaggerGen(options =>
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
 
-    // Add JWT Authentication support in Swagger
     options.AddSecurityDefinition(
         "Bearer",
         new OpenApiSecurityScheme
@@ -111,6 +109,19 @@ builder.Services.AddSwaggerGen(options =>
         }
     );
 });
+
+var allowedOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigins", policy =>
+    {
+        policy.WithOrigins(allowedOrigins)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<HeadersManager>();
